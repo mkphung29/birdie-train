@@ -1,17 +1,12 @@
 The content below is an example project proposal / requirements document. Replace the text below the lines marked "__TODO__" with details specific to your project. Remove the "TODO" lines.
 
-(__TODO__: your project name)
-
-# Shoppy Shoperson 
+# Birdie Train 
 
 ## Overview
 
-(__TODO__: a brief one or two paragraph, high-level description of your project)
+Attention all golfers! Do you want to improve your golf game but don't know where to start? That's where Birdie Train comes in!
 
-Remembering what to buy at the grocery store is waaaaay too difficult. Also, shopping for groceries when you're hungry leads to regrettable purchases. Sooo... that's where Shoppy Shoperson comes in!
-
-Shoppy Shoperson is a web app that will allow users to keep track of multiple grocery lists. Users can register and login. Once they're logged in, they can create or view their grocery list. For every list that they have, they can add items to the list or cross off items.
-
+Birdie Train is a web app that allows users to keep track of their golf stats for each round. Users can register and login. Once they're logged in, they can add a new round or view all of their previous rounds. For every round that they have, they can keep important statistics such as their score, the number of fairways or putts they've hit, and the course rating.
 
 ## Data Model
 
@@ -28,7 +23,7 @@ An Example User:
 
 ```javascript
 {
-  username: "shannonshopper",
+  username: "numberOneGolfer",
   hash: // a password hash,
   lists: // an array of references to List documents
 }
@@ -71,9 +66,7 @@ An Example List with Embedded Items:
 
 ## Site map
 
-(__TODO__: draw out a site map that shows how pages are related to each other)
-
-Here's a [complex example from wikipedia](https://upload.wikimedia.org/wikipedia/commons/2/20/Sitemap_google.jpg), but you can create one without the screenshots, drop shadows, etc. ... just names of pages and where they flow to.
+![site map](documentation/site-map.png)
 
 ## User Stories or Use Cases
 
@@ -81,10 +74,12 @@ Here's a [complex example from wikipedia](https://upload.wikimedia.org/wikipedia
 
 1. as non-registered user, I can register a new account with the site
 2. as a user, I can log in to the site
-3. as a user, I can create a new grocery list
-4. as a user, I can view all of the grocery lists I've created in a single list
-5. as a user, I can add items to an existing grocery list
-6. as a user, I can cross off items in an existing grocery list
+3. as a user, I can add a new golf round
+4. as a user, I can view all of the rounds I've played in a single list
+5. as a user, I can update any statistics to an existing round
+6. as a user, I can delete any round from my list
+
+PUT USE CASE DIAGRAM HERE
 
 ## Research Topics
 
