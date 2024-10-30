@@ -50,8 +50,6 @@ An Example Round with Embedded Items:
 
 ## [Link to Commented First Draft Schema](src/db.mjs)
 
-(**TODO**: create a first draft of your Schemas in db.mjs and link to it)
-
 ## Wireframes
 
 / - initial page
@@ -93,20 +91,18 @@ An Example Round with Embedded Items:
 
 ## Research Topics
 
-(**TODO**: the research topics that you're planning on working on along with their point values... and the total points of research topics listed)
+- (6 points) React
+  - I will use React as the main frontend framework to build the golf stats management system. React will manage the user interface and help create interactivity in the app. 
+  - see <code>/src/App.js</code> for the main React setup and structure
+- (2 points) Tailwind CSS
+  - I am using Tailwind CSS to style the application to give it a responsive design. Tailwind will help speed up development by providing utility classes directly in JSX without needing custom CSS files. 
+  - see <code>/src/App.css</code> for Tailwind setup and custom styling
+- (2 points) Client-Side Javascript Library: Chart.js
+  - I'll use Chart.js to visualize user golf stats over time, including graphs for scores, averages, and trends. This will enhance the user experience by adding a visual component to the interface. 
+- (2 points) Client-Side Javascript Library: React Hook Form
+  - I'll use React Hook Form to manage form state and validation, especially for adding new rounds and updating stats. This will make form handling more efficient and improve user interaction with the app
 
-- (5 points) Integrate user authentication
-  - I'm going to be using passport for user authentication
-  - And account has been made for testing; I'll email you the password
-  - see <code>cs.nyu.edu/~jversoza/ait-final/register</code> for register page
-  - see <code>cs.nyu.edu/~jversoza/ait-final/login</code> for login page
-- (4 points) Perform client side form validation using a JavaScript library
-  - see <code>cs.nyu.edu/~jversoza/ait-final/my-form</code>
-  - if you put in a number that's greater than 5, an error message will appear in the dom
-- (5 points) vue.js
-  - used vue.js as the frontend framework; it's a challenging library to learn, so I've assigned it 5 points
-
-10 points total out of 8 required points (**\_TODO**: addtional points will **not** count for extra credit)
+12 points total out of 10 required points 
 
 ## [Link to Initial Main Project File](app.mjs)
 
@@ -114,7 +110,7 @@ An Example Round with Embedded Items:
 
 ## Annotations / References Used
 
-(**TODO**: list any tutorials/references/etc. that you've based your code off of)
-
-1. [passport.js authentication docs](http://passportjs.org/docs) - (add link to source code that was based on this)
-2. [tutorial on vue.js](https://vuejs.org/v2/guide/) - (add link to source code that was based on this)
+1. [react.js docs](https://react.dev/learn) - 
+2. [tailwindcss docs](https://v2.tailwindcss.com/docs) -
+3. [chart.js docs](https://www.chartjs.org/docs/latest/)
+4. [react hook form docs](https://react-hook-form.com/get-started)
