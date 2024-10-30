@@ -50,27 +50,34 @@ An Example List with Embedded Items:
 
 ## Wireframes
 
-(__TODO__: wireframes for all of the pages on your site; they can be as simple as photos of drawings or you can use a tool like Balsamiq, Omnigraffle, etc.)
+/ - initial page
+![inital](documentation/inital-page.png)
 
-/list/create - page for creating a new shopping list
+/signup - user signup page
 
-![list create](documentation/list-create.png)
+![signup](documentation/signup.png)
 
-/list - page for showing all shopping lists
+/login - user login page
 
-![list](documentation/list.png)
+![login](documentation/login.png)
 
-/list/slug - page for showing specific shopping list
+/home - homepage showing list of all user rounds
 
-![list](documentation/list-slug.png)
+![home](documentation/homepage.png)
+
+/addRound - page for creating a new round
+
+![add round](documentation/add-round.png)
+
+/home/slug - page for showing specific round
+
+![list](documentation/course.png)
 
 ## Site map
 
 ![site map](documentation/site-map.png)
 
-## User Stories or Use Cases
-
-(__TODO__: write out how your application will be used through [user stories](http://en.wikipedia.org/wiki/User_story#Format) and / or [use cases](https://en.wikipedia.org/wiki/Use_case))
+## User Stories
 
 1. as non-registered user, I can register a new account with the site
 2. as a user, I can log in to the site
@@ -78,8 +85,6 @@ An Example List with Embedded Items:
 4. as a user, I can view all of the rounds I've played in a single list
 5. as a user, I can update any statistics to an existing round
 6. as a user, I can delete any round from my list
-
-PUT USE CASE DIAGRAM HERE
 
 ## Research Topics
 
