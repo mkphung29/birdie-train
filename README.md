@@ -1,5 +1,3 @@
-The content below is an example project proposal / requirements document. Replace the text below the lines marked "**TODO**" with details specific to your project. Remove the "TODO" lines.
-
 # Birdie Train
 
 ## Overview
@@ -104,9 +102,7 @@ An Example Round with Embedded Items:
 
 12 points total out of 10 required points 
 
-## [Link to Initial Main Project File](app.mjs)
-
-(**TODO**: create a skeleton Express application with a package.json, app.mjs, views folder, etc. ... and link to your initial app.mjs)
+## [Link to Initial Main Project File](src/app.mjs)
 
 ## Annotations / References Used
 
