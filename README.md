@@ -107,7 +107,8 @@ An Example Round with Embedded Items:
 
 ## Annotations / References Used
 
-1. [react.js docs](https://react.dev/learn) -
-2. [tailwindcss docs](https://v2.tailwindcss.com/docs) -
-3. [chart.js docs](https://www.chartjs.org/docs/latest/)
-4. [react hook form docs](https://react-hook-form.com/get-started)
+1. [react.js docs](https://react.dev/learn) 
+2. [react w3 schools](https://www.w3schools.com/react/react_router.asp)
+3. [tailwindcss docs](https://v2.tailwindcss.com/docs) 
+4. [chart.js docs](https://www.chartjs.org/docs/latest/)
+5. [react hook form docs](https://react-hook-form.com/get-started)
