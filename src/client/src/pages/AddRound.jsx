@@ -1,20 +1,38 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 export default function AddRound() {
     const { register, handleSubmit, reset } = useForm();
+    const navigate = useNavigate();
 
     const onSubmit = async (data) => {
+        const payload = {
+            ...data,
+            courseInfo: {
+                coursePar: data.coursePar,
+                courseRating: data.courseRating,
+                slopeRating: data.slopeRating,
+            },
+            roundStats: {
+                fairways: data.fairways,
+                GIRs: data.GIRs,
+                upAndDowns: data.upAndDowns,
+                putts: data.putts,
+            }
+        }; 
+
         try {
-            const response = await fetch('/api/rounds', {
+            const response = await fetch('http://localhost:8080/api/rounds', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data),
+                body: JSON.stringify(payload),
             });
             const result = await response.json();
             if (response.ok) {
                 alert(result.message);
                 reset();
+                navigate('/')
             } else {
                 alert(result.message);
             }

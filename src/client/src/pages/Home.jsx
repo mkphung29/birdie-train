@@ -6,18 +6,33 @@ export default function Home() {
 
     useEffect(() => {
         async function fetchRounds(){
-            const response = await fetch('/api/rounds');
-            const data = await response.json();
-            setRounds(data);
+            try{
+                const response = await fetch('http://localhost:8080/api/rounds');
+                const data = await response.json();
+                setRounds(data);
+            }catch(error){
+                console.log("Error fetching rounds.");
+            }
         }
         fetchRounds();
     }, []);
+
+    const deleteRound = async (roundId) => {
+        try{
+            await fetch(`http://localhost:8080/api/rounds/${roundId}`, {
+                method: 'DELETE',
+            });
+            setRounds((prevRounds) => prevRounds.filter((round) => round._id !== roundId));
+        }catch(error){
+            console.log("Error deleting round.");
+        }
+    }
 
     return (
         <div className="bg-[#c0d0b0] font-poppins min-h-screen p-6">
             <div className="flex justify-between items-center p-4 fixed top-0 left-0 right-0 bg-[#c0d0b0]">
                 {/* Logo on the left */}
-                <img src="/logo.png" alt="Logo" className="h-10 w-auto rounded-full" />
+                <img src="/logo.png" alt="Logo" className="h-10 w-auto rounded-full border-black" />
 
                 <div className="flex space-x-4">
                     <Link to="/addRound">
@@ -39,13 +54,25 @@ export default function Home() {
                     <li className="text-center text-lg text-gray-600">No rounds available</li>
                 ) : (
                     rounds.map((round) => (
-                        <li key={round._id}>
+                        <li key={round._id} className="p-4 border-2 border-green-800 bg-white rounded-lg shadow-lg">
                             <Link 
                                 to={`/${round.courseName.replace(/\s+/g, '-').toLowerCase()}`} 
-                                className="text-lg text-blue-700 underline hover:text-blue-500"
+                                className="text-xl font-bold text-teal-800 hover:text-teal-600"
                             >
                                 {round.courseName}
                             </Link>
+                            <p className="text-sm text-gray-500">
+                                Date: {new Date(round.date).toLocaleDateString()}
+                            </p>
+                            <p className="text-sm text-gray-700">
+                                Score = {round.score}
+                            </p>
+                            <button 
+                                onClick={() => deleteRound(round._id)}
+                                className="mt-2 px-4 py-1 bg-[#e5a995] text-white rounded-full hover:bg-[#b68677]"
+                            >
+                                Delete
+                            </button>
                         </li>
                     ))
                 )}
