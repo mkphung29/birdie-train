@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import mongooseSlugPlugin from 'mongoose-slug-plugin';
+//import mongooseSlugPlugin from 'mongoose-slug-plugin';
 
 // Connect to MongoDB
 mongoose.connect(process.env.DSN);
@@ -32,8 +32,10 @@ const roundSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }
 });
 
+/*
 userSchema.plugin(mongooseSlugPlugin, {tmpl: '<%=username%>'});
 roundSchema.plugin(mongooseSlugPlugin, {tmpl: '<%=courseName%>'});
+*/
 
 // Models
 const User = mongoose.model('User', userSchema);
