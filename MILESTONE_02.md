@@ -11,20 +11,29 @@ Click on Add Round to fill out the form. Save the Round and the home screen shou
 
 URL for deployed site 
 ---
-(TODO: add url for your dpeloyed site; should be in this format http://linserv1.cims.nyu.edu:YOUR_PORT_NUMBER)
+URL for frontend: http://216.165.22.58:32057
+URL for backend: http://linserv1.cims.nyu.edu:12190
 
 URL for form 
 ---
-(TODO: add link to a functioning form)
+Link to Add Round form: http://216.165.22.58:32057/addRound
+Link to backend data: http://linserv1.cims.nyu.edu:12190/api/rounds
 
 URL for form result
 ---
-(TODO: if applicable, add link to page that shows results of submitting form)
+All form results should be on homepage: http://216.165.22.58:32057
+It shows all of the courses in the database–will implement feature where users can see individual rounds later
 
 URL to github that shows line of code where research topic(s) are used / implemented
 --- 
-(TODO: add link to github url that shows line or lines of code that demonstrate in progress work on at least one research topic)
+The research topics that I implemented in this milestone were React, TailwindCSS, and React Hook Form. 
+[AddRound.jsx](https://github.com/nyu-csci-ua-0467-001-002-fall-2024/final-project-mkphung29/blob/master/src/client/src/pages/AddRound.jsx)
+[Home.jsx](https://github.com/nyu-csci-ua-0467-001-002-fall-2024/final-project-mkphung29/blob/master/src/client/src/pages/Home.jsx)
 
 References 
 ---
-(TODO: if applicable, links to annotated lines of code in github repository that were based off of tutorials / articles / sample projects)
+1. [Youtube Tutorial for Building Fullstack MERN App](https://www.youtube.com/watch?v=xKs2IZZya7c&themeRefresh=1)
+2. [Youtube Tutorial Playlist for Tailwind CSS](https://www.youtube.com/playlist?list=PL4cUxeGkcC9gpXORlEHjc5bgnIi5HEGhw)
+3. [React Scrimba Course](https://v2.scrimba.com/learn-react-c0e)
+4. [react hook form docs](https://react-hook-form.com/get-started)
+
