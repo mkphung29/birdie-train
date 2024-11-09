@@ -27,6 +27,10 @@ app.use((req, res, next) => {
     next();
 });
 
+app.get('/', (req, res) => {
+    res.send('Welcome to the Golf Stats Management API!');
+});
+
 // get all rounds for a user
 app.get('/api/rounds', async (req, res) => {
     const userId = req.user._id;
