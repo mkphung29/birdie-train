@@ -7,7 +7,8 @@ export default function Home() {
     useEffect(() => {
         async function fetchRounds(){
             try{
-                const response = await fetch('http://localhost:8080/api/rounds');
+                //'http://linserv1.cims.nyu.edu:32057/api/rounds'
+                const response = await fetch('http://linserv1.cims.nyu.edu:32057/api/rounds');
                 const data = await response.json();
                 setRounds(data);
             }catch(error){
@@ -19,7 +20,8 @@ export default function Home() {
 
     const deleteRound = async (roundId) => {
         try{
-            await fetch(`http://localhost:8080/api/rounds/${roundId}`, {
+            //await fetch(`http://localhost:8080/api/rounds/${roundId}`,
+            await fetch(`http://linserv1.cims.nyu.edu:32057/api/rounds/${roundId}`, {
                 method: 'DELETE',
             });
             setRounds((prevRounds) => prevRounds.filter((round) => round._id !== roundId));

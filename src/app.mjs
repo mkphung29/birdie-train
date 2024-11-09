@@ -87,5 +87,5 @@ app.post('/api/rounds', async (req, res) => {
 
 console.log("starting server...");
 app.listen(process.env.PORT ?? 8080, () => {
-    console.log("Server running on port 8080");
+    console.log("Server running on port");
 });
