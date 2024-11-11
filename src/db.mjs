@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-//import mongooseSlugPlugin from 'mongoose-slug-plugin';
+import mongooseSlugPlugin from 'mongoose-slug-plugin';
 
 // Connect to MongoDB
 mongoose.connect(process.env.DSN);
@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema({
 const roundSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, 
   courseName: { type: String, required: true },
+  slug: { type: String, slug: "courseName", unique: true },
   date: { type: Date, required: true },
   score: { type: Number, required: true },
   yardage: { type: Number },
@@ -32,10 +33,7 @@ const roundSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }
 });
 
-/*
-userSchema.plugin(mongooseSlugPlugin, {tmpl: '<%=username%>'});
 roundSchema.plugin(mongooseSlugPlugin, {tmpl: '<%=courseName%>'});
-*/
 
 // Models
 const User = mongoose.model('User', userSchema);

@@ -16,8 +16,7 @@ function App(){
                 <Route path="/login" element={<Login/>} />*/}
                 <Route path="/" element={<Home/>} />
                 <Route path="/addRound" element={<AddRound/>} />
-                <Route path="/round" element={<RoundDetail/>} />
-                {/*<Route path="/rounds/:courseNameSlug" element={<RoundDetail/>} />*/}
+                <Route path="/:slug" element={<RoundDetail/>} />
             </Routes>
         </Router>
     )

@@ -49,10 +49,9 @@ app.delete('/api/rounds/:id', async(req, res) => {
 });
 
 // get a specific round by course name slug
-app.get('/api/rounds/:courseNameSlug', async (req, res) => {
-    const { courseNameSlug } = req.params;
-    const courseName = courseNameSlug.replace(/-/g, ' ');
-    const round = await Round.findOne({ courseName, user: req.user._id });
+app.get('/api/rounds/:slug', async (req, res) => {
+    const { slug  } = req.params;
+    const round = await Round.findOne({ slug, user: req.user._id });
     if (round) {
         res.json(round);
     } else {
