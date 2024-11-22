@@ -43,6 +43,12 @@ export default function Home() {
                             Add Round
                         </button>
                     </Link>
+                    {/*
+                    <Link to="/progress">
+                        <button className="px-4 py-2 bg-gray-100 text-green-800 rounded-full hover:shadow-md hover:bg-green-200">
+                            Personal Progress Check
+                        </button>
+                    </Link>*/}
                     <button className="px-4 py-2 bg-gray-100 text-green-800 rounded-full hover:shadow-md hover:bg-green-200">
                         Sign Out
                     </button>

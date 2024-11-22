@@ -7,22 +7,22 @@ import { fileURLToPath } from 'url';
 import url from 'url';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+//import bcrypt from 'bcrypt';
 
-import { Round } from './db.mjs';
+import { User, Round } from './db.mjs';
 
 dotenv.config();
 
 const app = express();
 app.use(cors());
 
-const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Middleware
 app.use(express.json());
 
 // Middleware to add mock user ID if not present
 app.use((req, res, next) => {
-    // Use a valid MongoDB ObjectId for mock user
     req.user = req.user || { _id: new mongoose.Types.ObjectId('64c5e5c18f293dfed5a4d620') };
     next();
 });
@@ -31,39 +31,71 @@ app.get('/', (req, res) => {
     res.send('Welcome to the Golf Stats Management API!');
 });
 
-// get all rounds for a user
-app.get('/api/rounds', async (req, res) => {
-    const userId = req.user._id;
-    const rounds = await Round.find({ user: userId });
-    res.json(rounds);
+// User registration endpoint
+app.post('/api/signup', async (req, res) => {
+    try {
+        const { username, password } = req.body;
+        const existingUser = await User.findOne({ username });
+        if (existingUser) {
+            return res.status(409).json({ message: 'Username is already taken.' });
+        }
+        const salt = 10;
+        const hashedPassword = await bcrypt.hash(password, salt);
+        const newUser = new User({
+            username,
+            hash: hashedPassword
+        });
+        await newUser.save();
+        res.status(201).json({ message: 'User registered successfully.' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error registering user' });
+    }
 });
 
-app.delete('/api/rounds/:id', async(req, res) => {
-    try{
+// Get all rounds for a logged-in user
+app.get('/api/rounds', async (req, res) => {
+    const userId = req.user._id;
+    try {
+        const rounds = await Round.find({ user: userId });
+        res.json(rounds);
+    } catch (error) {
+        res.status(500).json({ message: 'Error retrieving rounds.' });
+    }
+});
+
+// Delete a specific round
+app.delete('/api/rounds/:id', async (req, res) => {
+    try {
         const roundId = req.params.id;
         await Round.findByIdAndDelete(roundId);
         res.status(200).json({ message: 'Round deleted successfully' });
-    }catch(err){
+    } catch (err) {
         res.status(500).json({ message: 'Error deleting round.' });
     }
 });
 
-// get a specific round by course name slug
+// Get a specific round by course name slug
 app.get('/api/rounds/:slug', async (req, res) => {
-    const { slug  } = req.params;
-    const round = await Round.findOne({ slug, user: req.user._id });
-    if (round) {
-        res.json(round);
-    } else {
-        res.status(404).json({ message: 'Round not found' });
+    const { slug } = req.params;
+    const userId = req.user._id;
+    try {
+        const round = await Round.findOne({ slug, user: userId });
+        if (round) {
+            res.json(round);
+        } else {
+            res.status(404).json({ message: 'Round not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Error retrieving round.' });
     }
 });
 
-// add a new round
+// Add a new round
 app.post('/api/rounds', async (req, res) => {
     const roundData = req.body;
+    const userId = req.user._id;
     const round = new Round({
-        user: req.user._id,
+        user: userId,
         courseName: roundData.courseName,
         date: new Date(roundData.date),
         score: roundData.score,
@@ -84,11 +116,34 @@ app.post('/api/rounds', async (req, res) => {
         await round.save();
         res.status(201).json({ message: 'Round added successfully' });
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        res.status(500).json({ message: 'Error adding round.' });
     }
 });
 
-console.log("starting server...");
+// Update rankings
+app.post('/api/rankings', async (req, res) => {
+    const userId = req.body.userId || req.user._id; 
+    const { rankings } = req.body;
+  
+    try {
+      const user = await User.findById(userId);
+      if (!user) {
+        return res.status(404).json({ message: 'User not found.' });
+      }
+  
+      user.rankings = rankings;
+      await user.save();
+  
+      res.status(200).json({ message: 'Rankings updated successfully.' });
+    } catch (error) {
+      console.error('Error updating rankings:', error);
+      res.status(500).json({ message: 'Error updating rankings.' });
+    }
+});
+  
+  
+
+console.log("Starting server...");
 app.listen(process.env.PORT ?? 8080, () => {
-    console.log("Server running on port");
+    console.log("Server running on port", process.env.PORT ?? 8080);
 });
