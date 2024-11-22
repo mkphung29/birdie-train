@@ -33,7 +33,7 @@ export default function AddRound() {
             if (response.ok) {
                 alert(result.message);
                 reset();
-                navigate('/')
+                navigate('/home')
             } else {
                 alert(result.message);
             }

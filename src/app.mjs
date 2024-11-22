@@ -8,6 +8,7 @@ import url from 'url';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 import { User, Round } from './db.mjs';
 
@@ -22,10 +23,11 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 app.use(express.json());
 
 // Middleware to add mock user ID if not present
+/*
 app.use((req, res, next) => {
     req.user = req.user || { _id: new mongoose.Types.ObjectId('64c5e5c18f293dfed5a4d620') };
     next();
-});
+});*/
 
 app.get('/', (req, res) => {
     res.send('Welcome to the Golf Stats Management API!');
@@ -45,8 +47,13 @@ app.post('/api/signup', async (req, res) => {
             username,
             hash: hashedPassword
         });
+
         await newUser.save();
-        res.status(201).json({ message: 'User registered successfully.' });
+
+        const accessToken = jwt.sign({ id: newUser._id }, process.env.ACCESS_TOKEN_SECRET);
+        //res.json({ accessToken: accessToken });
+
+        res.status(201).json({ accessToken: accessToken, message: 'User registered successfully.' });
     } catch (error) {
         res.status(500).json({ message: 'Error registering user' });
     }
@@ -69,15 +76,37 @@ app.post('/api/login', async (req, res) => {
             return res.status(401).json({ message: 'Invalid credentials.' });
         }
 
+        const accessToken = jwt.sign({ id: user._id }, process.env.ACCESS_TOKEN_SECRET);
+
         // If credentials are valid
-        res.status(200).json({ message: 'Login successful.' });
+        res.status(200).json({ accessToken: accessToken, message: 'Login successful.' });
     } catch (error) {
         res.status(500).json({ message: 'Error logging in user.' });
     }
 });
 
+// middleware for authenticating tokens
+function authenticateToken(req, res, next){
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+
+    if(token === null){
+        return res.status(401).json({ message: 'Access token required.' });
+    }
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if(err){
+            return res.status(403).json({ message: 'Invalid token.' });
+        }
+
+        req.user = user;
+        next(); // Proceed to the next middleware or route handler
+    });
+};
+
+
 // Get all rounds for a logged-in user
-app.get('/api/rounds', async (req, res) => {
+app.get('/api/rounds', authenticateToken, async (req, res) => {
     const userId = req.user._id;
     try {
         const rounds = await Round.find({ user: userId });

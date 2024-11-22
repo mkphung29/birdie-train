@@ -6,11 +6,26 @@ export default function Home() {
 
     useEffect(() => {
         async function fetchRounds(){
+            const token = localStorage.getItem('accessToken');
+            if(!token){
+                console.error('No access token found. Redirecting to login.');
+                window.location.href = '/login';
+                return;
+            }
             try {
-                const response = await fetch('http://localhost:8080/api/rounds');
-                //const response = await fetch('http://linserv1.cims.nyu.edu:12190/api/rounds');
-                const data = await response.json();
-                setRounds(data);
+                const response = await fetch('http://localhost:8080/api/rounds', {
+                    headers: { Authorization: `Bearer ${token}`},
+                });
+                /*const response = await fetch('http://linserv1.cims.nyu.edu:12190/api/rounds', {
+                    headers: { Authorization: `Bearer ${token}`},
+                });*/
+
+                if(response.ok){
+                    const data = await response.json();
+                    setRounds(data);
+                }else{
+                    console.error('Failed to fetch rounds.');
+                }
             } catch(error) {
                 console.log("Error fetching rounds.");
             }
@@ -32,6 +47,11 @@ export default function Home() {
         }
     }
 
+    const handleLogout = () => {
+        localStorage.removeItem('accessToken');
+        window.location.href = '/';
+    }
+
     return (
         <div className="bg-[#c0d0b0] font-poppins min-h-screen p-6">
             <div className="flex justify-between items-center p-4 fixed top-0 left-0 right-0 bg-[#c0d0b0]">
@@ -50,7 +70,7 @@ export default function Home() {
                         </button>
                     </Link>*/}
                     <Link to="/">
-                        <button className="px-4 py-2 bg-gray-100 text-green-800 rounded-full hover:shadow-md hover:bg-green-200">
+                        <button onClick={handleLogout} className="px-4 py-2 bg-gray-100 text-green-800 rounded-full hover:shadow-md hover:bg-green-200">
                             Sign Out
                         </button>
                     </Link>

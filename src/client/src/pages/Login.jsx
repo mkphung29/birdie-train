@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
 
     const onSubmit = async (data) => {
         try {
@@ -15,8 +15,8 @@ export default function Login() {
             });
             const result = await response.json();
             if (response.ok) {
-                console.log(result.message);
-                navigate('/home');
+                localStorage.setItem('accessToken', data.accessToken);
+                window.location.href = '/home';
             } else {
                 alert(result.message);
             }
