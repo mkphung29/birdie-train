@@ -7,7 +7,7 @@ import { fileURLToPath } from 'url';
 import url from 'url';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-//import bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt';
 
 import { User, Round } from './db.mjs';
 

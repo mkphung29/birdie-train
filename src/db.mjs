@@ -9,11 +9,11 @@ const userSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
     hash: { type: String, required: true },
     rounds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Round' }],
-    rankings: {
+    /*rankings: {
       type: Map,
       of: String, 
       default: new Map()
-    }
+    }*/
   });
   
 

@@ -12,11 +12,10 @@ function App(){
     return(
         <Router>
             <Routes>
-                {/*
                 <Route path="/" element={<InitialPage/>} />
                 <Route path="/signup" element={<Signup/>} />
-                <Route path="/login" element={<Login/>} />*/}
-                <Route path="/" element={<Home/>} />
+                <Route path="/login" element={<Login/>} />
+                <Route path="/home" element={<Home/>} />
                 <Route path="/addRound" element={<AddRound/>} />
                 <Route path="/:slug" element={<RoundDetail/>} />
                 <Route path="/progress" element={<Progress/>} />
