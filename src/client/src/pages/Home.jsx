@@ -49,9 +49,11 @@ export default function Home() {
                             Personal Progress Check
                         </button>
                     </Link>*/}
-                    <button className="px-4 py-2 bg-gray-100 text-green-800 rounded-full hover:shadow-md hover:bg-green-200">
-                        Sign Out
-                    </button>
+                    <Link to="/">
+                        <button className="px-4 py-2 bg-gray-100 text-green-800 rounded-full hover:shadow-md hover:bg-green-200">
+                            Sign Out
+                        </button>
+                    </Link>
                 </div>
             </div>
             

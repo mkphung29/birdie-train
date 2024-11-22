@@ -20,7 +20,7 @@ export default function Signup() {
                 reset();
                 navigate('/home');
             } else {
-                console.log(result.message);
+                alert(result.message);
             }
         } catch (error) {
             console.error('Error:', error);
