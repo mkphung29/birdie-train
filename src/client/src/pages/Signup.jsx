@@ -16,7 +16,9 @@ export default function Signup() {
             });
             const result = await response.json();
             if (response.ok) {
+                localStorage.setItem('accessToken', result.accessToken);
                 console.log(result.message);
+                
                 reset();
                 navigate('/home');
             } else {
