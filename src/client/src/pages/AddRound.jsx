@@ -7,6 +7,9 @@ export default function AddRound() {
     const navigate = useNavigate();
 
     const onSubmit = async (data) => {
+        const token = localStorage.getItem('accessToken');
+        console.log('Token: ', token);
+
         const payload = {
             ...data,
             courseInfo: {
@@ -26,7 +29,10 @@ export default function AddRound() {
             const response = await fetch('http://localhost:8080/api/rounds' , {
             //const response = await fetch('http://linserv1.cims.nyu.edu:12190/api/rounds', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                 },
                 body: JSON.stringify(payload),
             });
             const result = await response.json();

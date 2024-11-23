@@ -78,6 +78,7 @@ app.post('/api/login', async (req, res) => {
 
         const accessToken = jwt.sign({ id: user._id }, process.env.ACCESS_TOKEN_SECRET);
 
+
         // If credentials are valid
         res.status(200).json({ accessToken: accessToken, message: 'Login successful.' });
     } catch (error) {
@@ -90,9 +91,10 @@ function authenticateToken(req, res, next){
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
 
-    if(token === null){
+    if(!token){
         return res.status(401).json({ message: 'Access token required.' });
     }
+
 
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
         if(err){
@@ -100,7 +102,7 @@ function authenticateToken(req, res, next){
         }
 
         req.user = user;
-        next(); // Proceed to the next middleware or route handler
+        next(); 
     });
 };
 
@@ -144,9 +146,11 @@ app.get('/api/rounds/:slug', async (req, res) => {
 });
 
 // Add a new round
-app.post('/api/rounds', async (req, res) => {
+app.post('/api/rounds', authenticateToken, async (req, res) => {
+    const userId = req.user.id; 
+    console.log("This is the user ID: " + userId)
     const roundData = req.body;
-    const userId = req.user._id;
+
     const round = new Round({
         user: userId,
         courseName: roundData.courseName,

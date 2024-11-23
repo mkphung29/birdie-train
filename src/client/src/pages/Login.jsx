@@ -10,12 +10,15 @@ export default function Login() {
         try {
             const response = await fetch('http://localhost:8080/api/login', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('accessToken')}`, 
+                },
                 body: JSON.stringify(data),
             });
             const result = await response.json();
             if (response.ok) {
-                localStorage.setItem('accessToken', data.accessToken);
+                localStorage.setItem('accessToken', result.accessToken);
                 window.location.href = '/home';
             } else {
                 alert(result.message);
