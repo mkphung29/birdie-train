@@ -26,7 +26,8 @@ URL for form 2 (for current milestone)
 ---
 For this milestone, I implemented user signup and login pages. 
 
-- **URL for frontend**: [http://216.165.22.58:32057](http://216.165.22.58:32057)
+- [Signup page link](http://216.165.22.58:32057/signup)
+- [Login page link](http://216.165.22.58:32057/login)
 
 Special Instructions for Form 2
 ---
