@@ -9,7 +9,8 @@ export default function Home() {
         const token = localStorage.getItem('accessToken');
         async function fetchRounds(){
             try {
-                const response = await fetch('http://localhost:8080/api/rounds', {
+                const response = await fetch('http://linserv1.cims.nyu.edu:12190/api/rounds', {
+                //const response = await fetch('http://localhost:8080/api/rounds', {
                     headers: { Authorization: `Bearer ${token}`},
                 });
                 /*const response = await fetch('http://linserv1.cims.nyu.edu:12190/api/rounds', {
@@ -28,7 +29,8 @@ export default function Home() {
         }
         async function fetchUsername(){
             try{
-                const response = await fetch('http://localhost:8080/api/user', {
+                const response = await fetch('http://linserv1.cims.nyu.edu:12190/api/user', {
+                //await fetch('http://localhost:8080/api/user', {
                     headers: { Authorization: `Bearer ${token}` },
                 });
 
@@ -51,8 +53,8 @@ export default function Home() {
         e.stopPropagation(); 
         const token = localStorage.getItem('accessToken');
         try {
-            const response = await fetch(`http://localhost:8080/api/rounds/${roundId}`, {
-                //await fetch(`http://linserv1.cims.nyu.edu:12190/api/rounds/${roundId}`, {
+            const response = //await fetch(`http://localhost:8080/api/rounds/${roundId}`, {
+                await fetch(`http://linserv1.cims.nyu.edu:12190/api/rounds/${roundId}`, {
                 method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${token}`,

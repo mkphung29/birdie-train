@@ -11,7 +11,8 @@ export default function RoundDetail() {
         async function fetchRound() {
             const token = localStorage.getItem('accessToken');
             try {
-                const response = await fetch(`http://localhost:8080/api/rounds/${slug}`, {
+                const response = await fetch(`http://linserv1.cims.nyu.edu:12190/rounds/${slug}`, {
+                //await fetch(`http://localhost:8080/api/rounds/${slug}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
