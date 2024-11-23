@@ -8,7 +8,6 @@ export default function AddRound() {
 
     const onSubmit = async (data) => {
         const token = localStorage.getItem('accessToken');
-        console.log('Token: ', token);
 
         const payload = {
             ...data,

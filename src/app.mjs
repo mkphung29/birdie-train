@@ -110,9 +110,21 @@ app.get('/api/rounds', authenticateToken, async (req, res) => {
 });
 
 // Delete a specific round
-app.delete('/api/rounds/:id', async (req, res) => {
+app.delete('/api/rounds/:id', authenticateToken, async (req, res) => {
     try {
         const roundId = req.params.id;
+        const userId = req.user.id;
+        
+        const round = await Round.findById(roundId);
+
+        if(!round){
+            return res.status(404).json({ message: 'Round not found. '});
+        }
+
+        if(round.user.toString() !== userId){
+            return res.status(403).json({ message: 'Not authenticated.'});
+        }
+
         await Round.findByIdAndDelete(roundId);
         res.status(200).json({ message: 'Round deleted successfully' });
     } catch (err) {

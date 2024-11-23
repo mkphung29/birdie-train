@@ -49,12 +49,21 @@ export default function Home() {
     const deleteRound = async (roundId, e) => {
         // prevent click from navigating
         e.stopPropagation(); 
+        const token = localStorage.getItem('accessToken');
         try {
-            await fetch(`http://localhost:8080/api/rounds/${roundId}`, {
+            const response = await fetch(`http://localhost:8080/api/rounds/${roundId}`, {
                 //await fetch(`http://linserv1.cims.nyu.edu:12190/api/rounds/${roundId}`, {
                 method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
             });
-            setRounds((prevRounds) => prevRounds.filter((round) => round._id !== roundId));
+            if(response.ok){
+                setRounds((prevRounds) => prevRounds.filter((round) => round._id !== roundId));
+            }else{
+                const errorData = await response.json();
+                console.error('Error deleting round: ', errorData.message);
+            }
         } catch(error) {
             console.log("Error deleting round.");
         }
@@ -99,23 +108,21 @@ export default function Home() {
                     <li className="text-center text-lg text-gray-600">No rounds available</li>
                 ) : (
                     rounds.map((round) => (
-                        <Link to={`/${round.slug}`} key={round._id}>
-                            <li className="p-4 border-2 border-green-800 bg-white rounded-lg shadow-lg hover:bg-gray-100 transition">
+                        <li key={round._id} className="p-4 border-2 border-green-800 bg-white rounded-lg shadow-lg hover:bg-gray-100 transition">
+                            <Link to={`/${round.slug}`}>
                                 <div className="text-xl font-bold text-teal-800">{round.courseName}</div>
                                 <p className="text-sm text-gray-500">
                                     Date: {new Date(round.date).toLocaleDateString()}
                                 </p>
-                                <p className="text-sm text-gray-700">
-                                    Score = {round.score}
-                                </p>
-                                <button 
-                                    onClick={(e) => deleteRound(round._id, e)}
-                                    className="mt-2 px-4 py-1 bg-[#e5a995] text-white rounded-full hover:bg-[#b68677]"
-                                >
-                                    Delete
-                                </button>
-                            </li>
-                        </Link>
+                                <p className="text-sm text-gray-700">Score = {round.score}</p>
+                            </Link>
+                            <button 
+                                onClick={(e) => deleteRound(round._id, e)} 
+                                className="mt-2 px-4 py-1 bg-[#e5a995] text-white rounded-full hover:bg-[#b68677]"
+                            >
+                                Delete
+                            </button>
+                        </li>
                     ))
                 )}
             </ul>
