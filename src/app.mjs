@@ -120,10 +120,23 @@ app.delete('/api/rounds/:id', async (req, res) => {
     }
 });
 
+app.get('/api/user', authenticateToken, async (req, res) => {
+    try{
+        const user = await User.findById(req.user.id).select('username');
+        if(user){
+            res.json({ username: user.username });
+        }else{
+            res.status(404).json({ message: 'User not found.' });
+        }
+    }catch(error){
+        res.status(500).json({ message: 'Error retrieving user details.' });
+    }
+})
+
 // Get a specific round by course name slug
-app.get('/api/rounds/:slug', async (req, res) => {
+app.get('/api/rounds/:slug', authenticateToken, async (req, res) => {
     const { slug } = req.params;
-    const userId = req.user._id;
+    const userId = req.user.id;
     try {
         const round = await Round.findOne({ slug, user: userId });
         if (round) {
@@ -139,7 +152,6 @@ app.get('/api/rounds/:slug', async (req, res) => {
 // Add a new round
 app.post('/api/rounds', authenticateToken, async (req, res) => {
     const userId = req.user.id; 
-    console.log("This is the user ID: " + userId)
     const roundData = req.body;
 
     const round = new Round({
@@ -170,7 +182,7 @@ app.post('/api/rounds', authenticateToken, async (req, res) => {
 
 // Update rankings
 app.post('/api/rankings', async (req, res) => {
-    const userId = req.body.userId || req.user._id; 
+    const userId = req.body.userId || req.user.id; 
     const { rankings } = req.body;
   
     try {

@@ -9,8 +9,27 @@ export default function RoundDetail() {
 
     useEffect(() => {
         async function fetchRound() {
+            const token = localStorage.getItem('accessToken');
             try {
-                const response = await fetch(`/api/rounds/${slug}`);
+                const response = await fetch(`http://localhost:8080/api/rounds/${slug}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                if (!response.ok) {
+                    if (response.status === 401 || response.status === 403) {
+                        alert('Your session has expired. Please log in again.');
+                        navigate('/login');
+                    } else if (response.status === 404) {
+                        throw new Error('Round not found.');
+                    } else {
+                        throw new Error('Failed to fetch round details.');
+                    }
+                }
+
                 const data = await response.json();
                 console.log(data); 
                 setRound(data);
@@ -70,7 +89,7 @@ export default function RoundDetail() {
             </div>
 
             <div className="mt-8 text-center">
-                <Link to="/">
+                <Link to="/home">
                     <button className="px-6 py-2 bg-green-800 text-white rounded-full hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600">
                         Back to Rounds
                     </button>

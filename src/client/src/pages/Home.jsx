@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 
 export default function Home() {
     const [rounds, setRounds] = useState([]);
+    const [username, setUsername] = useState('');
 
     useEffect(() => {
+        const token = localStorage.getItem('accessToken');
         async function fetchRounds(){
-            const token = localStorage.getItem('accessToken');
             try {
                 const response = await fetch('http://localhost:8080/api/rounds', {
                     headers: { Authorization: `Bearer ${token}`},
@@ -25,7 +26,24 @@ export default function Home() {
                 console.log("Error fetching rounds.");
             }
         }
+        async function fetchUsername(){
+            try{
+                const response = await fetch('http://localhost:8080/api/user', {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+
+                if(response.ok){
+                    const data = await response.json();
+                    setUsername(data.username);
+                }else{
+                    console.error('Failed to fetch username');
+                }
+            }catch(error){
+                console.error('Error fetching username: ', error);
+            }
+        }
         fetchRounds();
+        fetchUsername();
     }, []);
 
     const deleteRound = async (roundId, e) => {
@@ -50,8 +68,10 @@ export default function Home() {
     return (
         <div className="bg-[#c0d0b0] font-poppins min-h-screen p-6">
             <div className="flex justify-between items-center p-4 fixed top-0 left-0 right-0 bg-[#c0d0b0]">
-                <img src="/logo.png" alt="Logo" className="h-10 w-auto rounded-full border-black" />
-
+                <div className="flex items-center space-x-4">
+                    <img src="/logo.png" alt="Logo" className="h-10 w-auto rounded-full border-black" />
+                    {username && <span className="text-xl font-bold text-green-800">{username}</span>}
+                </div>
                 <div className="flex space-x-4">
                     <Link to="/addRound">
                         <button className="px-4 py-2 bg-gray-100 text-green-800 rounded-full hover:shadow-md hover:bg-green-200">
