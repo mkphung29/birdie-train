@@ -7,11 +7,6 @@ export default function Home() {
     useEffect(() => {
         async function fetchRounds(){
             const token = localStorage.getItem('accessToken');
-            if(!token){
-                console.error('No access token found. Redirecting to login.');
-                window.location.href = '/login';
-                return;
-            }
             try {
                 const response = await fetch('http://localhost:8080/api/rounds', {
                     headers: { Authorization: `Bearer ${token}`},

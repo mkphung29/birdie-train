@@ -22,13 +22,6 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // Middleware
 app.use(express.json());
 
-// Middleware to add mock user ID if not present
-/*
-app.use((req, res, next) => {
-    req.user = req.user || { _id: new mongoose.Types.ObjectId('64c5e5c18f293dfed5a4d620') };
-    next();
-});*/
-
 app.get('/', (req, res) => {
     res.send('Welcome to the Golf Stats Management API!');
 });
@@ -51,7 +44,6 @@ app.post('/api/signup', async (req, res) => {
         await newUser.save();
 
         const accessToken = jwt.sign({ id: newUser._id }, process.env.ACCESS_TOKEN_SECRET);
-        //res.json({ accessToken: accessToken });
 
         res.status(201).json({ accessToken: accessToken, message: 'User registered successfully.' });
     } catch (error) {
@@ -77,7 +69,6 @@ app.post('/api/login', async (req, res) => {
         }
 
         const accessToken = jwt.sign({ id: user._id }, process.env.ACCESS_TOKEN_SECRET);
-
 
         // If credentials are valid
         res.status(200).json({ accessToken: accessToken, message: 'Login successful.' });
@@ -109,7 +100,7 @@ function authenticateToken(req, res, next){
 
 // Get all rounds for a logged-in user
 app.get('/api/rounds', authenticateToken, async (req, res) => {
-    const userId = req.user._id;
+    const userId = req.user.id;
     try {
         const rounds = await Round.find({ user: userId });
         res.json(rounds);
