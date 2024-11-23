@@ -93,6 +93,9 @@ An Example Round with Embedded Items:
 - (6 points) React
   - I will use React as the main frontend framework to build the golf stats management system. React will manage the user interface and help create interactivity in the app.
   - see <code>/src/App.js</code> for the main React setup and structure
+- (5 points) JSON Web Tokens, JWT
+  - I will use JWT for the user authentication. These tokens will allow users to save their rounds to their user profiles.  
+  - see <code>/src/app.mjs</code> for the JWT setup
 - (2 points) Tailwind CSS
   - I am using Tailwind CSS to style the application to give it a responsive design. Tailwind will help speed up development by providing utility classes directly in JSX without needing custom CSS files.
   - see <code>/src/App.css</code> for Tailwind setup and custom styling
