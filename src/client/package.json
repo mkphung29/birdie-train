@@ -42,5 +42,7 @@
   "devDependencies": {
     "tailwindcss": "^3.4.14"
   },
-  "proxy": "http://linserv1.cims.nyu.edu:12190"
+  "options": {
+    "proxy": "http://linserv1.cims.nyu.edu:12190"
+  }
 }
