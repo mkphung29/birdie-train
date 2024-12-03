@@ -25,8 +25,8 @@ export default function AddRound() {
         }; 
 
         try {
-            //const response = await fetch('http://localhost:8080/api/rounds' , {
-            const response = await fetch('http://linserv1.cims.nyu.edu:12190/api/rounds', {
+            const response = await fetch('http://localhost:8080/api/rounds' , {
+            //const response = await fetch('http://linserv1.cims.nyu.edu:12190/api/rounds', {
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json',

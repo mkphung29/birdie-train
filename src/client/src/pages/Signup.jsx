@@ -9,8 +9,8 @@ export default function Signup() {
 
     const onSubmit = async (data) => {
         try {
-            const response = await fetch('http://linserv1.cims.nyu.edu:12190/api/signup', {
-            //await fetch('http://localhost:8080/api/signup', {
+            const response = //await fetch('http://linserv1.cims.nyu.edu:12190/api/signup', {
+            await fetch('http://localhost:8080/api/signup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data),
