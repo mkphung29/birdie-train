@@ -192,27 +192,6 @@ app.post('/api/rounds', authenticateToken, async (req, res) => {
     }
 });
 
-// Update rankings
-app.post('/api/rankings', async (req, res) => {
-    const userId = req.body.userId || req.user.id; 
-    const { rankings } = req.body;
-  
-    try {
-      const user = await User.findById(userId);
-      if (!user) {
-        return res.status(404).json({ message: 'User not found.' });
-      }
-  
-      user.rankings = rankings;
-      await user.save();
-  
-      res.status(200).json({ message: 'Rankings updated successfully.' });
-    } catch (error) {
-      console.error('Error updating rankings:', error);
-      res.status(500).json({ message: 'Error updating rankings.' });
-    }
-});
-
 // get handicap of user
 app.get('/api/handicap', authenticateToken, async (req, res) => {
     try {
@@ -226,10 +205,10 @@ app.get('/api/handicap', authenticateToken, async (req, res) => {
 
         const roundsPlayed = player.rounds.length;
 
-        if (roundsPlayed < 20) {
-            // Return message if there are fewer than 20 rounds
+        if (roundsPlayed < 5) {
+            // Return message if there are fewer than 5 rounds (USUALLY IT'S 20 ROUNDS)
             return res.json({
-                message: 'Need at least 20 rounds to calculate handicap.',
+                message: 'Need at least 5 rounds to calculate handicap.',
                 roundsPlayed,
             });
         }
@@ -257,42 +236,68 @@ app.get('/api/handicap', authenticateToken, async (req, res) => {
     }
 });
 
+// get scoring average
 app.get('/api/scoring-average', authenticateToken, async (req, res) => {
-    try{
+    try {
         const playerId = req.user.id;
         const player = await User.findById(playerId).exec();
 
-        if(!player || !player.rounds.length){
-            return res.status(404).json({ error: 'No rounds found for this player.' });
+        if (!player) {
+            return res.status(404).json({ error: 'Player not found.' });
+        }
+
+        // Check if player has any rounds
+        if (!player.rounds || player.rounds.length === 0) {
+            return res.json({
+                message: 'No rounds available to calculate scoring average.',
+                scoringAverage: null, 
+            });
         }
 
         const totalScore = player.rounds.reduce((sum, round) => sum + round.score, 0);
         const scoringAverage = totalScore / player.rounds.length;
 
-        res.json({ scoringAverage });
-    }catch(error){
+        res.json({
+            scoringAverage,
+            message: null, 
+        });
+    } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Failed to calculate scoring average.' });
     }
 });
 
+
+// get personal best
 app.get('/api/personal-best', authenticateToken, async (req, res) => {
-    try{
+    try {
         const playerId = req.user.id;
         const player = await User.findById(playerId).exec();
 
-        if(!player || !player.rounds.length){
-            return res.status(404).json({ error: 'No rounds found for this player.' });
+        if (!player) {
+            return res.status(404).json({ error: 'Player not found.' });
+        }
+
+        // Check if the player has rounds
+        if (!player.rounds || player.rounds.length === 0) {
+            return res.json({
+                message: 'No rounds available to determine personal best.',
+                personalBest: null, 
+            });
         }
 
         const personalBest = Math.min(...player.rounds.map(round => round.score));
 
-        res.json({ personalBest});
-    }catch(error){
+        res.json({
+            personalBest,
+            message: null, 
+        });
+    } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Failed to fetch personal best score.' });
     }
 });
+
 
 console.log("Starting server...");
 app.listen(process.env.PORT ?? 8080, () => {

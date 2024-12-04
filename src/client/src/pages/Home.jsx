@@ -131,7 +131,7 @@ export default function Home() {
                     ))
                 )}
             </ul>
-            
+            {/** 
             <div className="min-h-screen bg-[#f4f4f4] p-6">
                 <h1 className="text-4xl font-bold text-center text-green-800 mb-8">Player Dashboard</h1>
                 <HandicapTracker />
@@ -139,7 +139,7 @@ export default function Home() {
                 <PersonalBest />
             </div>  
 
-            <h3 className="mt-7 text-lg ">Your Progress:</h3>
+            <h3 className="mt-7 text-lg ">Your Progress:</h3>*/}
         </div>
     );
 }
