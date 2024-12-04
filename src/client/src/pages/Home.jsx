@@ -7,6 +7,7 @@ import PersonalBest from '../components/PersonalBest';
 export default function Home() {
     const [rounds, setRounds] = useState([]);
     const [username, setUsername] = useState('');
+    const [prediction, setPrediction] = useState(null);
 
     useEffect(() => {
         const token = localStorage.getItem('accessToken');
@@ -47,8 +48,28 @@ export default function Home() {
                 console.error('Error fetching username: ', error);
             }
         }
+        async function fetchPrediction() {
+            try {
+                const response = await fetch('http://localhost:8080/api/predictions', {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+        
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data && data.length > 0) {
+                        setPrediction(data[0]); 
+                    }
+                } else {
+                    console.error('Failed to fetch prediction.');
+                }
+            } catch (error) {
+                console.log("Error fetching prediction.");
+            }
+        }
+
         fetchRounds();
         fetchUsername();
+        fetchPrediction();
     }, []);
 
     const deleteRound = async (roundId, e) => {
@@ -92,12 +113,13 @@ export default function Home() {
                             Add Round
                         </button>
                     </Link>
-                    {/*
-                    <Link to="/progress">
+                    
+                    <Link to="/prediction">
                         <button className="px-4 py-2 bg-gray-100 text-green-800 rounded-full hover:shadow-md hover:bg-green-200">
-                            Personal Progress Check
+                            Score Prediction Form 
                         </button>
-                    </Link>*/}
+                    </Link>
+
                     <Link to="/">
                         <button onClick={handleLogout} className="px-4 py-2 bg-gray-100 text-green-800 rounded-full hover:shadow-md hover:bg-green-200">
                             Sign Out
@@ -131,6 +153,18 @@ export default function Home() {
                     ))
                 )}
             </ul>
+
+            {/* Display the most recent prediction */}
+            {prediction && (
+                <div className="mt-10 p-6 border-4 border-green-800 bg-amber-100 rounded-xl">
+                    <h3 className="text-2xl font-bold text-teal-900 mb-4">Upcoming Goal for Next Round</h3>
+                    <p className="text-lg text-gray-600">Course: {prediction.courseName}</p>
+                    <p className="text-lg text-gray-600">Yardage: {prediction.yardage} yards</p>
+                    <p className="text-lg text-gray-600">Desired Score: {prediction.goalScore}</p> {/* Updated to goalScore */}
+                    <p className="text-lg text-gray-600">Comments: {prediction.comments}</p>
+                </div>
+            )}
+
             {/** 
             <div className="min-h-screen bg-[#f4f4f4] p-6">
                 <h1 className="text-4xl font-bold text-center text-green-800 mb-8">Player Dashboard</h1>

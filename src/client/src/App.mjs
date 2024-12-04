@@ -6,7 +6,7 @@ import Login from './pages/Login.jsx';
 import Home from './pages/Home.jsx';
 import AddRound from './pages/AddRound.jsx'
 import RoundDetail from './pages/RoundDetail.jsx';
-import Progress from './pages/Progress.jsx';
+import Prediction from './pages/Prediction.jsx';
 
 function App(){
     return(
@@ -18,7 +18,7 @@ function App(){
                 <Route path="/home" element={<Home/>} />
                 <Route path="/addRound" element={<AddRound/>} />
                 <Route path="/:slug" element={<RoundDetail/>} />
-                <Route path="/progress" element={<Progress/>} />
+                <Route path="/prediction" element={<Prediction/>} />
             </Routes>
         </Router>
     )

@@ -37,8 +37,17 @@ const roundSchema = new mongoose.Schema({
 
 roundSchema.plugin(mongooseSlugPlugin, {tmpl: '<%=courseName%>'});
 
+const predictionSchema = new mongoose.Schema({
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    courseName: { type: String, required: true },
+    yardage: { type: Number, required: true },
+    goalScore: { type: Number, required: true },
+    comments: { type: String },
+}, { timestamps: true });
+
 // Models
 const User = mongoose.model('User', userSchema);
 const Round = mongoose.model('Round', roundSchema);
+const Prediction = mongoose.model('Prediction', predictionSchema);
 
-export { User, Round };
+export { User, Round, Prediction };

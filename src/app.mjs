@@ -10,7 +10,7 @@ import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-import { User, Round } from './db.mjs';
+import { User, Round, Prediction } from './db.mjs';
 
 dotenv.config();
 
@@ -297,6 +297,46 @@ app.get('/api/personal-best', authenticateToken, async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch personal best score.' });
     }
 });
+
+// get latest prediction
+app.get('/api/predictions', authenticateToken, async (req, res) => {
+    const userId = req.user.id;
+
+    try {
+        // Fetch the most recent prediction for the user
+        const prediction = await Prediction.find({ user: userId }).sort({ createdAt: -1 }).limit(1);
+
+        if (prediction.length === 0) {
+            return res.status(404).json({ message: 'No predictions found.' });
+        }
+
+        res.status(200).json(prediction);
+    } catch (err) {
+        res.status(500).json({ message: 'Error fetching predictions.' });
+    }
+});
+
+// add a score prediction
+app.post('/api/predictions', authenticateToken, async (req, res) => {
+    const userId = req.user.id;
+    const predictionData = req.body;
+
+    const prediction = new Prediction({
+        user: userId,
+        courseName: predictionData.courseName,
+        yardage: predictionData.yardage,
+        goalScore: predictionData.goalScore,
+        comments: predictionData.comments,
+    });
+
+    try {
+        await prediction.save();
+        res.status(201).json({ message: 'Prediction saved successfully' });
+    } catch (err) {
+        res.status(500).json({ message: 'Error saving prediction.' });
+    }
+});
+
 
 
 console.log("Starting server...");
