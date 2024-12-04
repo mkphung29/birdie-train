@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import HandicapTracker from '../components/HandicapTracker';
+import ScoringAverage from '../components/ScoringAverage';
 
 export default function Home() {
     const [rounds, setRounds] = useState([]);
@@ -133,6 +134,7 @@ export default function Home() {
             <div className="min-h-screen bg-[#f4f4f4] p-6">
                 <h1 className="text-4xl font-bold text-center text-green-800 mb-8">Player Dashboard</h1>
                 <HandicapTracker />
+                <ScoringAverage />
             </div>  
 
             <h3 className="mt-20 text-xl font-semibold text-green-800">Scoring Average</h3>

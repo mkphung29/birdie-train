@@ -257,6 +257,25 @@ app.get('/api/handicap', authenticateToken, async (req, res) => {
     }
 });
 
+app.get('/api/scoring-average', authenticateToken, async (req, res) => {
+    try{
+        const playerId = req.user.id;
+        const player = await User.findById(playerId).exec();
+
+        if(!player || !player.rounds.length){
+            return res.status(404).json({ error: 'No rounds found for this player.' });
+        }
+
+        const totalScore = player.rounds.reduce((sum, round) => sum + round.score, 0);
+        const scoringAverage = totalScore / player.rounds.length;
+
+        res.json({ scoringAverage });
+    }catch(error){
+        console.error(error);
+        res.status(500).json({ error: 'Failed to calculate scoring average.' });
+    }
+});
+
 console.log("Starting server...");
 app.listen(process.env.PORT ?? 8080, () => {
     console.log("Server running on port", process.env.PORT ?? 8080);
