@@ -212,8 +212,50 @@ app.post('/api/rankings', async (req, res) => {
       res.status(500).json({ message: 'Error updating rankings.' });
     }
 });
-  
-  
+
+// get handicap of user
+app.get('/api/handicap', authenticateToken, async (req, res) => {
+    try {
+        const playerId = req.user.id;
+        // Populate rounds data from the Round model
+        const player = await User.findById(playerId).populate('rounds').exec();
+
+        if (!player) {
+            return res.status(404).json({ error: 'Player not found.' });
+        }
+
+        const roundsPlayed = player.rounds.length;
+
+        if (roundsPlayed < 20) {
+            // Return message if there are fewer than 20 rounds
+            return res.json({
+                message: 'Need at least 20 rounds to calculate handicap.',
+                roundsPlayed,
+            });
+        }
+
+        // Proceed with handicap calculation
+        const differentials = player.rounds.map(round => {
+            const { score, courseInfo: { courseRating, slopeRating } } = round;
+            return ((score - courseRating) / slopeRating) * 113;
+        });
+
+        // Sort differentials and take the lowest 8
+        const lowestDifferentials = differentials.sort((a, b) => a - b).slice(0, 8);
+
+        // Calculate the handicap index
+        const handicapIndex = (lowestDifferentials.reduce((sum, diff) => sum + diff, 0) / lowestDifferentials.length) * 0.96;
+
+        // Update player's handicap index
+        player.handicapIndex = handicapIndex;
+        await player.save();
+
+        res.json({ handicapIndex, roundsPlayed });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to calculate handicap index.' });
+    }
+});
 
 console.log("Starting server...");
 app.listen(process.env.PORT ?? 8080, () => {
