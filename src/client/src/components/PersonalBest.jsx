@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from 'react';
 
-export default function ScoringAverage(){
-    const [average, setAverage] = useState(null);
+export default function PersonalBest(){
+    const [personalBest, setPersonalBest] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        async function fetchScoringAverage(){
+        async function fetchPersonalBest(){
             const token = localStorage.getItem('accessToken');
 
             try{
-                const response = await fetch('http://localhost:8080/api/scoring-average', {
+                const response = await fetch('http://localhost:8080/api/personal-best', {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 })
 
                 if(!response.ok){
-                    throw new Error('Failed to fetch scoring average.');
+                    throw new Error('Failed to fetch personal best score.');
                 }
 
                 const data = await response.json();
-                setAverage(data.scoringAverage);
+                setPersonalBest(data.personalBest);
             }catch(error){
                 console.error(error);
             }finally{
@@ -28,15 +28,15 @@ export default function ScoringAverage(){
             }
         }
 
-        fetchScoringAverage();
+        fetchPersonalBest();
     }, []);
 
-    if (loading) return <div>Loading..,</div>;
+    if (loading) return <div>Loading...</div>;
 
     return(
         <div className="bg-white p-6 shadow-md rounded-lg text-center">
-            <h2 className="text-2xl font-bold text-teal-800 mb-4">Your Scoring Average</h2>
-            <p className="text-4xl font-semibold text-teal-600">{average?.toFixed(1)}</p>
+            <h2 className="text-2xl font-bold text-purple-800 mb-4">Personal Best</h2>
+            <p className="text-4xl font-semibold text-purple-600">{personalBest}</p>
         </div>
     )
 }

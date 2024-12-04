@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import HandicapTracker from '../components/HandicapTracker';
 import ScoringAverage from '../components/ScoringAverage';
+import PersonalBest from '../components/PersonalBest';
 
 export default function Home() {
     const [rounds, setRounds] = useState([]);
@@ -135,10 +136,9 @@ export default function Home() {
                 <h1 className="text-4xl font-bold text-center text-green-800 mb-8">Player Dashboard</h1>
                 <HandicapTracker />
                 <ScoringAverage />
+                <PersonalBest />
             </div>  
 
-            <h3 className="mt-20 text-xl font-semibold text-green-800">Scoring Average</h3>
-            <h3 className="mt-20 text-xl font-semibold text-green-800">Personal Best</h3>
             <h3 className="mt-7 text-lg ">Your Progress:</h3>
         </div>
     );
