@@ -38,17 +38,10 @@ export default function HandicapTracker() {
         fetchHandicap();
     }, []); // Fetch data on mount
 
-    const handleAddRound = async () => {
-        // Logic to add a new round (could be a form submission or API call)
-        // After adding the round, re-fetch the data
-        fetchHandicap(); // Re-fetch handicap data
-    };
-
     return (
         <div>
-            <button onClick={handleAddRound}>Add Round</button>
             <div className="bg-white p-6 shadow-md rounded-lg text-center">
-                <h2 className="text-2xl font-bold text-teal-800 mb-4">Your Handicap Index</h2>
+                <h2 className="text-2xl font-bold text-teal-800 mb-4">Handicap Index</h2>
                 {loading ? (
                     <p>Loading...</p>
                 ) : message ? (

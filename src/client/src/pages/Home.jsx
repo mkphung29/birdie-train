@@ -104,7 +104,7 @@ export default function Home() {
         <div className="bg-[#c0d0b0] font-poppins min-h-screen p-6">
             <div className="flex justify-between items-center p-4 fixed top-0 left-0 right-0 bg-[#c0d0b0]">
                 <div className="flex items-center space-x-4">
-                    <img src="/logo.png" alt="Logo" className="h-10 w-auto rounded-full border-black" />
+                    <img src="/logo.png" alt="Logo" className="h-10 w-auto rounded-full border border-black" />
                     {username && <span className="text-xl font-bold text-green-800">{username}</span>}
                 </div>
                 <div className="flex space-x-4">
@@ -154,26 +154,53 @@ export default function Home() {
                 )}
             </ul>
 
+            <div className="mt-10 p-6 border-4 border-green-800 bg-amber-100 rounded-xl">
+                <h1 className="text-4xl font-bold text-center text-green-800 mb-8">Player Dashboard</h1>
+                <div className="flex justify-center gap-6">
+                    <div className="flex-1 max-w-xs p-6 border-4 border-teal-700 bg-teal-300 shadow-lg rounded-lg text-center">
+                        <HandicapTracker />
+                    </div>
+                    <div className="flex-1 max-w-xs p-6 border-4 border-amber-700 bg-amber-300 shadow-lg rounded-lg text-center">
+                        <ScoringAverage />
+                    </div>
+                    <div className="flex-1 max-w-xs p-6 border-4 border-pink-700 bg-pink-200 shadow-lg rounded-lg text-center">
+                        <PersonalBest />
+                    </div>
+                </div>
+            </div>
+
+
+
+
             {/* Display the most recent prediction */}
             {prediction && (
-                <div className="mt-10 p-6 border-4 border-green-800 bg-amber-100 rounded-xl">
-                    <h3 className="text-2xl font-bold text-teal-900 mb-4">Upcoming Goal for Next Round</h3>
-                    <p className="text-lg text-gray-600">Course: {prediction.courseName}</p>
-                    <p className="text-lg text-gray-600">Yardage: {prediction.yardage} yards</p>
-                    <p className="text-lg text-gray-600">Desired Score: {prediction.goalScore}</p> {/* Updated to goalScore */}
-                    <p className="text-lg text-gray-600">Comments: {prediction.comments}</p>
+                <div className="mt-10 p-6 border-4 border-green-800 bg-amber-100 rounded-xl w-full max-w-4xl mx-auto">
+                    <h3 className="text-2xl font-bold text-teal-900 mb-6 text-center">Upcoming Goal for Next Round</h3>
+                    <div className="space-y-4">
+                        <p className="text-lg text-gray-600">
+                            <span className="font-bold">Course:</span> {prediction.courseName}
+                        </p>
+                        <p className="text-lg text-gray-600">
+                            <span className="font-bold">Yardage:</span> {prediction.yardage} yards
+                        </p>
+                        <p className="text-lg text-gray-600">
+                            <span className="font-bold">Desired Score:</span> {prediction.goalScore}
+                        </p>
+                        <p className="text-lg text-gray-600">
+                            <span className="font-bold">Comments:</span> {prediction.comments}
+                        </p>
+                    </div>
                 </div>
             )}
 
-            {/** 
-            <div className="min-h-screen bg-[#f4f4f4] p-6">
-                <h1 className="text-4xl font-bold text-center text-green-800 mb-8">Player Dashboard</h1>
-                <HandicapTracker />
-                <ScoringAverage />
-                <PersonalBest />
-            </div>  
+           {/** Add chart.js in the future */}
 
-            <h3 className="mt-7 text-lg ">Your Progress:</h3>*/}
+           {/* Footer */}
+           <footer className="mt-auto p-4 bg-[#c0d0b0]">
+                <div className="text-center text-sm text-gray-700">
+                    &copy; {new Date().getFullYear()} Birdie Train. All rights reserved. Created by Madison Phung
+                </div>
+            </footer>
         </div>
     );
 }

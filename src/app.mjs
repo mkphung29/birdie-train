@@ -163,32 +163,42 @@ app.get('/api/rounds/:slug', authenticateToken, async (req, res) => {
 
 // Add a new round
 app.post('/api/rounds', authenticateToken, async (req, res) => {
-    const userId = req.user.id; 
-    const roundData = req.body;
-
-    const round = new Round({
-        user: userId,
-        courseName: roundData.courseName,
-        date: new Date(roundData.date),
-        score: roundData.score,
-        yardage: roundData.yardage,
-        courseInfo: {
-            coursePar: roundData.coursePar,
-            courseRating: roundData.courseRating,
-            slopeRating: roundData.slopeRating,
-        },
-        roundStats: {
-            fairways: roundData.fairways,
-            GIRs: roundData.GIRs,
-            upAndDowns: roundData.upAndDowns,
-            putts: roundData.putts,
-        },
-    });
     try {
-        await round.save();
-        res.status(201).json({ message: 'Round added successfully' });
-    } catch (err) {
-        res.status(500).json({ message: 'Error adding round.' });
+        const userId = req.user.id;
+        const roundData = req.body;
+
+        const newRound = new Round({
+            user: userId,
+            courseName: roundData.courseName,
+            date: new Date(roundData.date),
+            score: roundData.score,
+            yardage: roundData.yardage,
+            courseInfo: {
+                coursePar: roundData.coursePar,
+                courseRating: roundData.courseRating,
+                slopeRating: roundData.slopeRating,
+            },
+            roundStats: {
+                fairways: roundData.fairways,
+                GIRs: roundData.GIRs,
+                upAndDowns: roundData.upAndDowns,
+                putts: roundData.putts,
+            },
+        });
+
+        const savedRound = await newRound.save();
+
+        // Update the user's rounds array
+        await User.findByIdAndUpdate(
+            userId,
+            { $push: { rounds: savedRound._id } },
+            { new: true }
+        );
+
+        res.status(201).json({ message: 'Round added successfully.', round: savedRound });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to add round.' });
     }
 });
 
@@ -202,7 +212,7 @@ app.get('/api/handicap', authenticateToken, async (req, res) => {
         if (!player) {
             return res.status(404).json({ error: 'Player not found.' });
         }
-
+        
         const roundsPlayed = player.rounds.length;
 
         if (roundsPlayed < 5) {
@@ -240,12 +250,13 @@ app.get('/api/handicap', authenticateToken, async (req, res) => {
 app.get('/api/scoring-average', authenticateToken, async (req, res) => {
     try {
         const playerId = req.user.id;
-        const player = await User.findById(playerId).exec();
+        const player = await User.findById(playerId).populate('rounds').exec();
 
         if (!player) {
             return res.status(404).json({ error: 'Player not found.' });
         }
 
+        //console.log(player.rounds);
         // Check if player has any rounds
         if (!player.rounds || player.rounds.length === 0) {
             return res.json({
@@ -272,13 +283,14 @@ app.get('/api/scoring-average', authenticateToken, async (req, res) => {
 app.get('/api/personal-best', authenticateToken, async (req, res) => {
     try {
         const playerId = req.user.id;
-        const player = await User.findById(playerId).exec();
+        const player = await User.findById(playerId).populate('rounds').exec();
 
         if (!player) {
             return res.status(404).json({ error: 'Player not found.' });
         }
 
-        // Check if the player has rounds
+        //console.log(player.rounds);
+
         if (!player.rounds || player.rounds.length === 0) {
             return res.json({
                 message: 'No rounds available to determine personal best.',
@@ -297,6 +309,7 @@ app.get('/api/personal-best', authenticateToken, async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch personal best score.' });
     }
 });
+
 
 // get latest prediction
 app.get('/api/predictions', authenticateToken, async (req, res) => {

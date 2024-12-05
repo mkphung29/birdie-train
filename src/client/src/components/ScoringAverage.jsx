@@ -15,16 +15,24 @@ export default function ScoringAverage() {
                 },
             });
 
+            if (!response.ok) {
+                // Handle non-200 responses
+                const errorData = await response.json();
+                setMessage(errorData.error || 'Failed to fetch scoring average.');
+                return;
+            }
+
             const data = await response.json();
 
-            if (response.ok) {
-                setAverage(data.scoringAverage);
-                setMessage(data.message);
+            if (data.message) {
+                setMessage(data.message); // Handle "No rounds available" message
+                setAverage(null);
             } else {
-                setMessage(data.error || 'Failed to fetch scoring average.');
+                setAverage(data.scoringAverage);
+                setMessage(null); // Clear any previous error message
             }
         } catch (error) {
-            console.error(error);
+            console.error('Error fetching scoring average:', error);
             setMessage('An error occurred while fetching your scoring average.');
         } finally {
             setLoading(false);
@@ -33,25 +41,20 @@ export default function ScoringAverage() {
 
     useEffect(() => {
         fetchScoringAverage();
-    }, []); // Fetch data on mount
-
-    const handleAddRound = async () => {
-        // Logic to add a new round (could be a form submission or API call)
-        // After adding the round, re-fetch the data
-        fetchScoringAverage(); // Re-fetch scoring average data
-    };
+    }, []); // Fetch on mount
 
     return (
         <div>
-            <button onClick={handleAddRound}>Add Round</button>
             <div className="bg-white p-6 shadow-md rounded-lg text-center">
-                <h2 className="text-2xl font-bold text-teal-800 mb-4">Your Scoring Average</h2>
+                <h2 className="text-2xl font-bold text-teal-800 mb-4">Scoring Average</h2>
                 {loading ? (
                     <p>Loading...</p>
                 ) : message ? (
                     <p className="text-lg text-red-500">{message}</p>
                 ) : (
-                    <p className="text-4xl font-semibold text-teal-800">{average?.toFixed(1)}</p>
+                    <p className="text-4xl font-semibold text-teal-800">
+                        {average?.toFixed(1) || 'N/A'}
+                    </p>
                 )}
             </div>
         </div>
