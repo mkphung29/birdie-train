@@ -16,7 +16,6 @@ export default function ScoringAverage() {
             });
 
             if (!response.ok) {
-                // Handle non-200 responses
                 const errorData = await response.json();
                 setMessage(errorData.error || 'Failed to fetch scoring average.');
                 return;
@@ -25,11 +24,11 @@ export default function ScoringAverage() {
             const data = await response.json();
 
             if (data.message) {
-                setMessage(data.message); // Handle "No rounds available" message
+                setMessage(data.message); 
                 setAverage(null);
             } else {
                 setAverage(data.scoringAverage);
-                setMessage(null); // Clear any previous error message
+                setMessage(null); 
             }
         } catch (error) {
             console.error('Error fetching scoring average:', error);

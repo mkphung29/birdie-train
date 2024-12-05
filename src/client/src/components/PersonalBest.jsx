@@ -21,7 +21,7 @@ export default function PersonalBest() {
 
             const data = await response.json();
             setPersonalBest(data.personalBest);
-            setMessage(data.message || ''); // Handling message from API
+            setMessage(data.message || ''); 
         } catch (error) {
             console.error(error);
             setMessage('An error occurred while fetching your personal best.');
