@@ -212,7 +212,7 @@ app.get('/api/handicap', authenticateToken, async (req, res) => {
         if (!player) {
             return res.status(404).json({ error: 'Player not found.' });
         }
-        
+
         const roundsPlayed = player.rounds.length;
 
         if (roundsPlayed < 5) {
@@ -223,7 +223,6 @@ app.get('/api/handicap', authenticateToken, async (req, res) => {
             });
         }
 
-        // Proceed with handicap calculation
         const differentials = player.rounds.map(round => {
             const { score, courseInfo: { courseRating, slopeRating } } = round;
             return ((score - courseRating) / slopeRating) * 113;
