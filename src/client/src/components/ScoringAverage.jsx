@@ -9,7 +9,8 @@ export default function ScoringAverage() {
         const token = localStorage.getItem('accessToken');
 
         try {
-            const response = await fetch('http://localhost:8080/api/scoring-average', {
+            const response = await fetch('http://linserv1.cims.nyu.edu:12190/api/scoring-average', {
+            //const response = await fetch('http://localhost:8080/api/scoring-average', {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

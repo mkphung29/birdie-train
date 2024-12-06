@@ -17,7 +17,8 @@ export default function Prediction() {
         };
 
         try {
-            const response = await fetch('http://localhost:8080/api/predictions', {
+            //const response = await fetch('http://localhost:8080/api/predictions', {
+            const response = await fetch('http://linserv1.cims.nyu.edu:12190/api/predictions', {
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json',
