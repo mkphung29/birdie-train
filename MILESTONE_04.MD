@@ -94,7 +94,7 @@ React, JWT Tokens, and Tailwind CSS is used throughout my entire application but
 
 Optional project notes 
 --- 
-Use this sample username and login to see the handicap, scoring average, and pesonal best statistics. This user will already have rounds saved in order to calculate these stats.
+Use this sample username and login to see the handicap, scoring average, and pesonal best statistics. This user will already have rounds saved in order to calculate these stats, so the grader doesn't have to input info themselves.
 
 username: golfer11
 password: 123
