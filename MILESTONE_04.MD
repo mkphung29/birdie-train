@@ -96,7 +96,7 @@ Optional project notes
 --- 
 Use this sample username and login to see the handicap, scoring average, and pesonal best statistics. This user will already have rounds saved in order to calculate these stats.
 
-username: golfer1
+username: golfer11
 password: 123
 
 Attributions
