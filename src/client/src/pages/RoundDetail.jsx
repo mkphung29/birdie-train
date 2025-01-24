@@ -11,7 +11,7 @@ export default function RoundDetail() {
         async function fetchRound() {
             const token = localStorage.getItem('accessToken');
             try {
-                const response = await fetch(`http://linserv1.cims.nyu.edu:12190/api/rounds/${slug}`, {
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/api/rounds/${slug}`, {
                 //await fetch(`http://localhost:8080/api/rounds/${slug}`, {
                     method: 'GET',
                     headers: {

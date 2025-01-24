@@ -13,7 +13,7 @@ export default function Home() {
         const token = localStorage.getItem('accessToken');
         async function fetchRounds(){
             try {
-                const response = await fetch('http://linserv1.cims.nyu.edu:12190/api/rounds', {
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/api/rounds`, {
                 //const response = await fetch('http://localhost:8080/api/rounds', {
                     headers: { Authorization: `Bearer ${token}`},
                 });
@@ -30,7 +30,7 @@ export default function Home() {
         }
         async function fetchUsername(){
             try{
-                const response = await fetch('http://linserv1.cims.nyu.edu:12190/api/user', {
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user`, {
                 //await fetch('http://localhost:8080/api/user', {
                     headers: { Authorization: `Bearer ${token}` },
                 });
@@ -47,7 +47,7 @@ export default function Home() {
         }
         async function fetchPrediction() {
             try {
-                const response = await fetch('http://linserv1.cims.nyu.edu:12190/api/predictions', {
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/api/predictions`, {
                 //await fetch('http://localhost:8080/api/predictions', {
                     headers: { Authorization: `Bearer ${token}` },
                 });

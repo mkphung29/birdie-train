@@ -9,7 +9,7 @@ export default function PersonalBest() {
         const token = localStorage.getItem('accessToken');
 
         try {
-            const response = await fetch('http://linserv1.cims.nyu.edu:12190/api/personal-best', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/personal-best`, {
             //const response = await fetch('http://localhost:8080/api/personal-best', {
                 headers: {
                     Authorization: `Bearer ${token}`,

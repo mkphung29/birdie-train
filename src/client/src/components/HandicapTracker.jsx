@@ -9,7 +9,7 @@ export default function HandicapTracker() {
     const fetchHandicap = async () => {
         const token = localStorage.getItem('accessToken');
         try {
-            const response = await fetch('http://linserv1.cims.nyu.edu:12190/api/handicap', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/handicap`, {
             //const response = await fetch('http://localhost:8080/api/handicap', {
                 headers: {
                     Authorization: `Bearer ${token}`,

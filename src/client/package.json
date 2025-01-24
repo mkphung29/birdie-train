@@ -16,7 +16,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "PORT=32057 react-scripts start --host 0.0.0.0", 
+    "start": "react-scripts start", 
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -41,8 +41,5 @@
   },
   "devDependencies": {
     "tailwindcss": "^3.4.14"
-  },
-  "options": {
-    "proxy": "http://linserv1.cims.nyu.edu:12190"
   }
 }
