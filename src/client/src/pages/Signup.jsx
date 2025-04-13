@@ -8,7 +8,6 @@ export default function Signup() {
     const password = watch('password');
 
     const onSubmit = async (data) => {
-        console.log('API URL:', process.env.REACT_APP_API_URL);
         try {
             const response = await fetch(`${process.env.REACT_APP_API_URL}api/signup`, {
             //const response = await fetch('http://localhost:8080/api/signup', {
