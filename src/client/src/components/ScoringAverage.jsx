@@ -9,7 +9,7 @@ export default function ScoringAverage() {
         const token = localStorage.getItem('accessToken');
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/scoring-average`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}api/scoring-average`, {
             //const response = await fetch('http://localhost:8080/api/scoring-average', {
                 headers: {
                     Authorization: `Bearer ${token}`,
