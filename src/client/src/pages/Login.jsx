@@ -6,7 +6,7 @@ export default function Login() {
 
     const onSubmit = async (data) => {
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/login`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}api/login`, {
             //await fetch('http://localhost:8080/api/login', {
                 method: 'POST',
                 headers: { 
